@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.WebExceptionTriggered != null)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Ooops! Something went wrong...</strong>
+        <p>Please click <a href="/Home/Index">here</a></p>
+    </div>
+}
+
+<h2>Messages:</h2>
+<div id="loading"><strong>Loading...</strong></div>
+<div id="messages"></div>
+
+@section Scripts {     
+<script type="text/javascript">
+    $( document ).ready(function() {
+        getVM(1);        
+    });
+
+    function pageClick(obj) {
+        //var pageId = button.value;
+        var pageId = $(obj).text();
+        $('#loading').show();
+        getVM(pageId);
+    };
+
+    function getVM(pageId) {
+        $.ajax({
+            url: "/Home/GetMessages",
+            type: "GET",
+            data: { pageId: pageId}
+        })
+        .done(function(partialViewResult) {
+            $("#messages").html(partialViewResult);
+            $("#page_"+pageId).addClass("active");
+            $('#loading').hide();
+        });
+    };
+</script>
+}

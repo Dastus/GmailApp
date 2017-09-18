@@ -1,0 +1,31 @@
+﻿@model GmailListApp.UI.ViewModels.ViewModel
+
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <td><strong>ID</strong></td>
+                <td><strong>Subject</strong></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model.Emails)
+            {
+                <tr>
+                    <td>@m.Id</td>
+                    <td>@m.Subject</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div style="text-align:center">
+        <ul id="pagination" class="pagination" style="margin:auto">
+            @for(int i =1; i <= Model.PagesCount; i++)
+            {
+            <li id="page_@i"><a href="#" onclick="pageClick(this)">@i</a></li>
+            }        
+        </ul>
+    </div>
+}
+
